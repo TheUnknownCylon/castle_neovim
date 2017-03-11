@@ -24,6 +24,8 @@ Plug 'jiangmiao/auto-pairs'
 " * ys  add surroundings, e.g. ysiw] , or yss) for a line
 Plug 'tpope/vim-surround'
 
+Plug 'Rip-Rip/clang_complete'
+
 " openSCAD support
 Plug 'sirtaj/vim-openscad'
 
@@ -151,6 +153,7 @@ augroup omnifuncs
   autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType java setlocal omnifunc=javacomplete#Complete
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
@@ -203,6 +206,31 @@ augroup OpenSCADDev
   autocmd filetype openscad set expandtab ts=2 sw=2
 augroup END
 
+let g:clang_complete_auto = 0
+let g:clang_auto_select = 0
+let g:clang_omnicppcomplete_compliance = 0
+let g:clang_make_default_keymappings = 0
+"let g:clang_use_library = 1
+
+
+" Run NeoMake on all writes
+autocmd! BufReadPost * Neomake
+autocmd! BufWritePost * Neomake
+
+" Try database from cmake build folder in case it's present
+let g:cmakebuildfolder = join([getcwd(), 'build'], '/')
+if isdirectory(g:cmakebuildfolder)
+  let g:neomake_clangcheck_args = ['-p', g:cmakebuildfolder, '%:p' ]
+endif
+
+" Do not use NeoMake autolint by default (does not work well in all cases,
+" such as clang + compile database)
+let g:neomake_autolint_enabled = 0
+let g:neomake_autolint_sign_column_always = 1
+let g:neomake_autolint_events = {
+      \ 'InsertLeave': {'delay': 0},
+      \ 'TextChanged': {},
+      \ }
 
 
 set hidden
