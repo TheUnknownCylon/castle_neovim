@@ -26,6 +26,8 @@ Plug 'tpope/vim-surround'
 
 Plug 'Rip-Rip/clang_complete'
 
+Plug 'zchee/deoplete-jedi'
+
 " openSCAD support
 Plug 'sirtaj/vim-openscad'
 
@@ -36,9 +38,17 @@ Plug 'itchyny/lightline.vim'
 
 Plug 'neomake/neomake' | Plug 'dojoteef/neomake-autolint'
 
+Plug 'majutsushi/tagbar'
+
+" Plug '~/filecontext'
+
+" Plug 'artur-shaik/vim-javacomplete2'
+
 " END OF PLUGIN SECTION
 call plug#end()
 
+
+filetype plugin indent on
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
@@ -128,12 +138,11 @@ nnoremap <leader>f :Neoformat<cr>
 " Provide a shortcut for quick format and save
 nnoremap <leader>w :Neoformat<cr>:w<cr>
 
-
 """"""""""""""""""""""""""""""""""""
 " NerdTree
 """"""""""""""""""""""""""""""""""""
 nnoremap <leader>n :NERDTreeToggle<cr>
-
+" autocmd BufEnter * FileContextFind
 
 """"""""""""""""""""""""""""""""""""
 " Deoplete
@@ -232,5 +241,8 @@ let g:neomake_autolint_events = {
       \ 'TextChanged': {},
       \ }
 
+" Tagbar
+set updatetime=30
+set cursorline
 
 set hidden
